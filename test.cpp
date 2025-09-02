@@ -11,6 +11,6 @@ int main() {
      assert(add(2, 1) == 0);
 
   
-    std::cout << "All tests passed ✅" << std::endl;
+    std::cout << "All three tests passed ✅" << std::endl;
     return 0;
 }
