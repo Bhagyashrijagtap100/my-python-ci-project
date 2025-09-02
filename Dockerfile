@@ -1,20 +1,14 @@
-name: Run C++ Hello World in Docker
+FROM ubuntu:20.04
+ENV DEBIAN_FRONTEND=noninteractive
 
-on:
-  push:
-    branches:
-      - main   # Runs only when you push to main branch
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    cmake \
+ && rm -rf /var/lib/apt/lists/*
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+WORKDIR /app
+COPY . .
 
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
+RUN cmake . && make
 
-      - name: Build Docker image
-        run: docker build -t cpp-hello .
-
-      - name: Run container
-        run: docker run cpp-hello
+CMD ["./hello"]
