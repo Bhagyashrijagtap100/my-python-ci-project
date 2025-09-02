@@ -1,6 +1,10 @@
 name: C++ Docker Tests
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [ "cpp-docker" ]
+  pull_request:
+    branches: [ "cpp-docker" ]
 
 jobs:
   docker-tests:
