@@ -8,7 +8,7 @@ int add(int a, int b) {
 int main() {
     assert(add(2, 3) == 5);
     assert(add(-1, 1) == 0);
-     assert(add(2, 1) == 0);
+     assert(add(2, 1) == 3);
 
   
     std::cout << "All three tests passed ✅" << std::endl;
