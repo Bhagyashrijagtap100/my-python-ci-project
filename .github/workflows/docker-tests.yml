@@ -1,0 +1,17 @@
+name: C++ Docker Tests
+
+on: [push, pull_request]
+
+jobs:
+  docker-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Build Docker image
+        run: docker build -t cpp-app-test .
+
+      - name: Run tests in container
+        run: docker run --rm cpp-app-test

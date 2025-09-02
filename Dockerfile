@@ -1,14 +1,18 @@
-FROM ubuntu:20.04
-ENV DEBIAN_FRONTEND=noninteractive
+# Use GCC with CMake pre-installed
+FROM debian:bookworm
 
+# Install build tools
 RUN apt-get update && apt-get install -y \
-    build-essential \
-    cmake \
- && rm -rf /var/lib/apt/lists/*
+    build-essential cmake && \
+    rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
+
+# Copy source
 COPY . .
 
-RUN cmake . && make
+# Build project
+RUN mkdir build && cd build && cmake .. && make
 
-CMD ["./hello"]
+# Default command: run tests
+CMD ["./build/mytests"]
