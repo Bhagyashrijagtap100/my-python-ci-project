@@ -5,7 +5,11 @@ FROM ubuntu:22.04 AS test-stage
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
-    docker build -t cpp-app-test . -y --no-install-recommends g++ cmake make ninja-build && \
+    apt-get install -y --no-install-recommends \
+    g++ \
+    cmake \
+    make \
+    ninja-build && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
@@ -30,7 +34,11 @@ FROM ubuntu:22.04 AS build-stage
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
-    docker build -t cpp-app-test . -y --no-install-recommends g++ cmake make ninja-build && \
+    apt-get install -y --no-install-recommends \
+    g++ \
+    cmake \
+    make \
+    ninja-build && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
