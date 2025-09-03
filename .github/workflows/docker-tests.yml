@@ -1,20 +1,47 @@
-name: C++ Docker Tests
+name: C++ CI/CD with Docker + CMake
 
 on:
   push:
-    branches: [ "cpp-docker" ]
+    branches: ["**"]
+    tags:
+      - "v*"
+  pull_request:
 
+permissions:
+  contents: write
 
 jobs:
-  docker-tests:
-    runs-on: ubuntu-latest
+  build-and-test:
+    runs-on: ubuntu-22.04
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
+      # Build Docker image (runs tests inside automatically)
       - name: Build Docker image
-        run: docker build -t cpp-app-test .
+        run: docker build -f Dockerfile -t cpp-app-ci .
 
-      - name: Run tests in container
-        run: docker run --rm cpp-app-test
+      # Extract binary from Docker image
+      - name: Extract binary
+        run: |
+          id=$(docker create cpp-app-ci)
+          docker cp "$id":/app/build/my_app ./my_app
+          docker rm "$id"
+
+      # Upload binary as CI artifact
+      - name: Upload binary artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: my_app-linux-x86_64
+          path: ./my_app
+
+      # Create release only when a tag is pushed
+      - name: Release on tag
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v1
+        with:
+          files: ./my_app
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
