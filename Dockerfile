@@ -16,8 +16,8 @@ WORKDIR /app
 
 # Copy project files
 COPY CMakeLists.txt .
-COPY main .
-COPY test .
+COPY main.cpp .
+COPY test.cpp .
 
 # Configure and build
 RUN cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
@@ -44,8 +44,8 @@ RUN apt-get update && \
 WORKDIR /app
 
 COPY CMakeLists.txt .
-COPY main .
-COPY test .
+COPY main.cpp .
+COPY test.cpp .
 
 RUN cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
 RUN cmake --build build --target my_app
