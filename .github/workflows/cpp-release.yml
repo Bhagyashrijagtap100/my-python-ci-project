@@ -1,11 +1,11 @@
-name: C++ CI/CD with Docker and Tag Release
+name: C++ CI/CD with Docker and Host Release new
 
 on:
   push:
     branches: ["cpp-docker"]
     tags:
       - "v.*"   # Trigger release for any semantic version tag like v0.1, v1.0
-
+  pull_request:
 
 permissions:
   contents: write
