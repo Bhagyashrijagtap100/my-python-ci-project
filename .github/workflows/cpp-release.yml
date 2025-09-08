@@ -1,4 +1,4 @@
-name: C++ CI/CD with Docker and Host Release
+name: C++ CI/CD with Docker and Tag Release
 
 on:
   push:
